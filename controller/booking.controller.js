@@ -95,7 +95,7 @@ const createBooking = async (req, res, next) => {
 // GET /bookings
 const getBookings = async (req, res, next) => {
   try {
-    const { page = 1, limit = 10, eventId, status } = req.query;
+    const { page = 1, limit = 10, eventId, status, search } = req.query;
 
     const whereClause = {};
     
@@ -105,6 +105,15 @@ const getBookings = async (req, res, next) => {
     
     if (status) {
       whereClause.status = status;
+    }
+
+    // ✅ Add search functionality
+    if (search) {
+      whereClause[Op.or] = [
+        { customer_name: { [Op.like]: `%${search}%` } },
+        { customer_email: { [Op.like]: `%${search}%` } },
+        { booking_reference: { [Op.like]: `%${search}%` } }
+      ];
     }
 
     const offset = (page - 1) * limit;

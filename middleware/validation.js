@@ -28,7 +28,8 @@ const validateBookingQuery = (req, res, next) => {
     page: Joi.number().integer().min(1).default(1),
     limit: Joi.number().integer().min(1).max(100).default(10),
     eventId: Joi.number().integer().min(1).optional(),
-    status: Joi.string().valid('PENDING', 'CONFIRMED', 'FAILED').optional()
+    status: Joi.string().valid('PENDING', 'CONFIRMED', 'FAILED').optional(),
+    search: Joi.string().optional().allow('')  // ✅ ADD THIS LINE
   });
 
   const { error, value } = schema.validate(req.query);
