@@ -22,7 +22,7 @@ const validateBooking = (req, res, next) => {
   next();
 };
 
-// Validate query params for bookings
+// Validate query params for bookings 
 const validateBookingQuery = (req, res, next) => {
   const schema = Joi.object({
     page: Joi.number().integer().min(1).default(1),
